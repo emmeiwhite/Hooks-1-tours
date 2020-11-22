@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Loading from "./components/common/Loading";
+import { ReactComponent as Loader } from "./components/common/Loading.svg";
 import Tours from "./components/tours/Tours";
 // ATTENTION!!!!!!!!!!
 // I SWITCHED TO PERMANENT DOMAIN
@@ -9,27 +9,6 @@ function App() {
   const [tours, setTours] = useState([]);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
-
-  /* ---
-  const getTours = async () => {
-    try {
-      const response = await fetch(url);
-      console.log(response);
-      if (response.status >= 200 && response.status < 300) {
-        const result1 = await fetch(response.json());
-        const result2 = await fetch(result1.json());
-        console.log(result2);
-        // setTours(data);
-        setLoading(false);
-      } else {
-        throw new Error("Could not fetch the data");
-      }
-    } catch (error) {
-      console.log("ERROR :", error);
-      setError(true);
-    }
-  };
-  --- */
 
   // Mimimcing componentDidMount()
   useEffect(() => {
@@ -54,7 +33,11 @@ function App() {
   // Let us do conditional rendering
 
   if (loading) {
-    return <Loading />;
+    return (
+      <div style={{ textAlign: "center", margin: "2rem 0" }}>
+        <Loader />
+      </div>
+    );
   }
 
   if (error) {
@@ -62,10 +45,7 @@ function App() {
   }
 
   return (
-    <main className="App">
-      <h1>Our Tours</h1>
-      {tours.length > 0 && <Tours tours={tours} />}
-    </main>
+    <main className="App">{tours.length > 0 && <Tours tours={tours} />}</main>
   );
 }
 

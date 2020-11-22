@@ -1,0 +1,10 @@
+.tours-wrapper {
+  width: 500px;
+  margin: 0 auto;
+}
+.tours-wrapper .our-tours {
+  text-align: center;
+  font-size: 3rem;
+  font-weight: 300;
+  text-transform: uppercase;
+}
