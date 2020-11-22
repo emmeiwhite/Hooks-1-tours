@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Tour.css";
 
-const Tour = ({ id, name, info, image, price }) => {
+const Tour = ({ id, name, info, image, price, handleClick }) => {
   const [showMoreClicked, setShowMoreClicked] = useState(false);
   return (
     <article key={id} className="destination-card">
@@ -27,7 +27,9 @@ const Tour = ({ id, name, info, image, price }) => {
         </span>
       </div>
 
-      <button className="not-interested-btn">Not Interested</button>
+      <button className="not-interested-btn" onClick={() => handleClick(id)}>
+        Not Interested
+      </button>
     </article>
   );
 };

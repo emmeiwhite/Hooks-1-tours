@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { ReactComponent as Loader } from "./components/common/Loading.svg";
 import Tours from "./components/tours/Tours";
+import "./App.css";
 // ATTENTION!!!!!!!!!!
 // I SWITCHED TO PERMANENT DOMAIN
 const url = "https://course-api.com/react-tours-project";
@@ -30,8 +31,13 @@ function App() {
       .catch((err) => console.log(err));
   }, []);
 
-  // Let us do conditional rendering
+  //Not Interested Button click
+  const handleBtnClick = (id) => {
+    const updatedTours = tours.filter((tour) => tour.id !== id);
+    setTours(updatedTours);
+  };
 
+  // Let us do conditional rendering
   if (loading) {
     return (
       <div style={{ textAlign: "center", margin: "2rem 0" }}>
@@ -45,7 +51,16 @@ function App() {
   }
 
   return (
-    <main className="App">{tours.length > 0 && <Tours tours={tours} />}</main>
+    <section>
+      <p className="our-tours">
+        {tours.length > 0 ? "Our Tours" : "No Tours Left"}{" "}
+      </p>
+      <main className="App">
+        {tours.length > 0 && (
+          <Tours tours={tours} handleClick={handleBtnClick} />
+        )}
+      </main>
+    </section>
   );
 }
 
