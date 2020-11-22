@@ -31,10 +31,31 @@ function App() {
       .catch((err) => console.log(err));
   }, []);
 
-  //Not Interested Button click
+  // Functionality 1: Not Interested Button click
   const handleBtnClick = (id) => {
     const updatedTours = tours.filter((tour) => tour.id !== id);
     setTours(updatedTours);
+  };
+
+  // Functionality 2: Refresh Button click
+
+  const handleRefresh = () => {
+    setLoading(true);
+    // getTours();
+
+    fetch(url)
+      .then((response) => {
+        if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        } else {
+          throw new Error("Could not fetch data");
+        }
+      })
+      .then((tours) => {
+        setLoading(false);
+        setTours(tours);
+      })
+      .catch((err) => console.log(err));
   };
 
   // Let us do conditional rendering
@@ -53,7 +74,16 @@ function App() {
   return (
     <section>
       <p className="our-tours">
-        {tours.length > 0 ? "Our Tours" : "No Tours Left"}{" "}
+        {tours.length > 0 ? (
+          "Our Tours"
+        ) : (
+          <div>
+            <p>No Tours Left</p>
+            <button className="btn" onClick={handleRefresh}>
+              Refresh
+            </button>
+          </div>
+        )}{" "}
       </p>
       <main className="App">
         {tours.length > 0 && (
