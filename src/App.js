@@ -11,11 +11,9 @@ function App() {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // Mimimcing componentDidMount()
+  /*--- I am using fetch API here
   useEffect(() => {
     setLoading(true);
-    // getTours();
-
     fetch(url)
       .then((response) => {
         if (response.status >= 200 && response.status < 300) {
@@ -30,7 +28,23 @@ function App() {
       })
       .catch((err) => console.log(err));
   }, []);
+  ---*/
 
+  const fetchTours = async () => {
+    try {
+      const response = await fetch(url);
+      const tours = await response.json();
+      setLoading(false);
+      setTours(tours);
+    } catch (error) {
+      setLoading(false);
+      setError(true);
+    }
+  };
+  useState(() => {
+    setLoading(true);
+    fetchTours();
+  }, []);
   // Functionality 1: Not Interested Button click
   const handleBtnClick = (id) => {
     const updatedTours = tours.filter((tour) => tour.id !== id);
@@ -41,21 +55,7 @@ function App() {
 
   const handleRefresh = () => {
     setLoading(true);
-    // getTours();
-
-    fetch(url)
-      .then((response) => {
-        if (response.status >= 200 && response.status < 300) {
-          return response.json();
-        } else {
-          throw new Error("Could not fetch data");
-        }
-      })
-      .then((tours) => {
-        setLoading(false);
-        setTours(tours);
-      })
-      .catch((err) => console.log(err));
+    fetchTours();
   };
 
   // Let us do conditional rendering
